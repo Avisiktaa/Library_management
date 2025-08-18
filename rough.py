@@ -1,3 +1,6 @@
+#THIS FILE IS FOR ROUGH, SOMETHING TO DO EXPERIMENT
+# ALSO WE CAN DO IT ON TERMINAL, JUST WRITING py
+
 from datetime import datetime
 def id_g(name,role,obj):
     year = datetime.now().year % 100
