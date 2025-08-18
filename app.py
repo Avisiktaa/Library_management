@@ -1,6 +1,7 @@
 from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from sqlalchemy import desc
+from datetime import datetime
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
@@ -9,6 +10,7 @@ db = SQLAlchemy(app)
 
 head = {"admin":"1234"}
 
+#tables
 class Book(db.Model):# for book entry
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(50))
@@ -28,12 +30,28 @@ class Staff(db.Model):# staff add
     name = db.Column(db.String(50))
     password = db.Column(db.String(50))
 
-class Student(db.Model):# staff add
+class Student(db.Model):# student add
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
 
+#useful function
+def id_g(cls,name,role):
+    year = datetime.now().year % 100
+    name_word = name.split()
+    letter = name_word[0][0] + name_word[-1][0]
+    prefix = str(year) + letter + role
+    obj = cls.query.filter(cls.id.like(f"{prefix}%")).order_by(desc(cls.id)).first()
     
+    if obj:
+        last = obj.id[-1] #not always, exception for more digit number
+        return f"{prefix}{int(last)+1}"
+    
+    return prefix+"0"
 
+
+
+
+#main
 @app.route('/')
 def library():
     return render_template("library.html")
