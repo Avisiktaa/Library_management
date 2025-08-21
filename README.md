@@ -6,5 +6,14 @@ Avisikta 47 <br>
 
 *Work*
 Biswayan
-1. 21 Aug, worked on Add and Delete Employee 
+- 21 Aug, worked on Add and Delete Employee 
+
+Avisikta
+- 
+
+Ankit
+- 
+
+Kaushiki
+- 
 
