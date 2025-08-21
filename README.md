@@ -1,9 +1,14 @@
 # Library_management
-git add README.md <br>
-git commit -m "Roll.no" <br>
-git push origin <br>
-
-Team name:
+*WORK:* <br>
 Biswayan 39
+- 21 Aug: create db, add & del Staff
+
 Avisikta 47
-Avisiktaaaa
+- 
+
+Ankit 27
+- 
+
+Kaushiki 61
+- 
+
