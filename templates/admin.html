@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block t %} Admin {% endblock %}
 {% block b %}
+<br>
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/admin/+student">Add Student</a>
+  </li>
+</ul>
+
 <div class="container py-5">
     <h2 class="mb-4 text-center">📚 Admin Dashboard</h2>
 
@@ -8,23 +18,13 @@
     <div class="card mb-4">
       <div class="card-header bg-primary text-white">Add New Employee</div>
       <div class="card-body">
-        <form id="addEmployeeForm">
+        <form action="/admin" id="addEmployeeForm" method="post">
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Full Name" required>
+              <input type="text" class="form-control" name="name" placeholder="Full Name" required>
             </div>
             <div class="col-md-6">
-              <input type="email" class="form-control" placeholder="Email Address" required>
-            </div>
-            <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Employee ID" required>
-            </div>
-            <div class="col-md-6">
-              <select class="form-select" required>
-                <option value="">Select Role</option>
-                <option value="Staff">Staff</option>
-                <option value="Admin">Admin</option>
-              </select>
+              <input type="email" class="form-control" name="mail" placeholder="Email Address" required>
             </div>
           </div>
           <button type="submit" class="btn btn-success mt-3">Add Employee</button>
@@ -35,14 +35,13 @@
     <div class="card">
       <div class="card-header bg-secondary text-white">Employee List</div>
       <ul class="list-group list-group-flush">
+        {% for e in emp %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          John Doe (ID: EMP001)
-          <a href="#" type="button" class="btn btn-sm btn-danger">Delete</a>
+          {{e.name}} (ID: {{e.id}})
+          <!-- <a href="#" type="button" class="btn btn-sm btn-danger">Delete</a> -->
+          <a href="/edel/{{e.id}}" type="button" class="btn btn-sm btn-danger">Delete</a>
         </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Jane Smith (ID: EMP002)
-          <button class="btn btn-sm btn-danger">Delete</button>
-        </li>
+        {% endfor %}
         <!-- Add more dynamically -->
       </ul>
     </div>
