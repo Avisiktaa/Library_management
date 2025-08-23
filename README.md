@@ -1,14 +1,19 @@
-# Library_management
-*WORK:* <br>
-Biswayan 39
-- 21 Aug: create db, add & del Staff
+# Library Management
 
-Avisikta 47
-- 
+**Work Summary:**  
+Each entry includes the contributor's name, and tasks performed.
 
-Ankit 27
-- 
+---
 
-Kaushiki 61
-- 
+**Biswayan (39)**  
+- 21 Aug: Created database  
+- 21 Aug: Added and deleted staff records  
 
+**Avisikta (47)**  
+- *Pending update*  
+
+**Ankit (27)**  
+- *Pending update*  
+
+**Kaushiki (61)**  
+- *Pending update*  
