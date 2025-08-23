@@ -8,7 +8,12 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-head = {"admin":"1234"}
+#for temporary 
+head = {"admin":"1234"} # user:password
+staff = None #user
+student = None #user
+
+
 
 #tables
 class Book(db.Model):# for book entry
@@ -61,9 +66,24 @@ def library():
 def student():
     return render_template("student.html")
 
-@app.route("/staff")
+@app.route("/staff",methods=["POST","GET"])
 def staff():
-    return render_template("staff.html")
+    error = None
+    if request.method=="POST":
+        user = request.form["user"]
+        fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
+        if fetch: #present
+            staff = user
+            return redirect("/staffop")
+        else: #adsent
+            error = "No such user available"
+
+    return render_template("staff.html",error=error)
+
+@app.route("/staffop")
+def Staff_Operation(): #For now COMMON to STAFF
+    return render_template("staffop.html")
+
 
 @app.route("/admin",methods=["GET","POST"])
 def admin():
@@ -79,13 +99,12 @@ def admin():
 
 
     
-@app.route("/edel/<int:no>",methods=["POST","GET"])
+@app.route("/edel/<int:no>")
 def Employee_Del(no):
     emp_fetch = Staff.query.get(no)
     db.session.delete(emp_fetch)
     db.session.commit()
     return redirect("/admin")
-
 
 @app.route("/abtus")
 def About_Us():

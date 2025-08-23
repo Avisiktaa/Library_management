@@ -10,10 +10,11 @@ Each entry includes the contributor's name, and tasks performed.
 - 21 Aug: Added and deleted staff records  
 
 **Avisikta (47)**  
-- *Pending update*  
+- _Pending update_  
 
 **Ankit (27)**  
-- *Pending update*  
+- _Pending update_  
 
 **Kaushiki (61)**  
-- *Pending update*  
+- _Pending update_
+
