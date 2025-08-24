@@ -1,6 +1,5 @@
 from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import desc
 from datetime import datetime
 
 app = Flask(__name__)
@@ -38,7 +37,8 @@ class Staff(db.Model):# staff add
 class Student(db.Model):# student add
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
-    year = db.Column(db.Date,default=(datetime.now().year + 1)) 
+    passout = db.Column(db.Date,default=(datetime.now().year + 4))
+    mail = db.Column(db.String(75))
 
 #useful function
 def id_g(cls,name,role):
@@ -46,7 +46,7 @@ def id_g(cls,name,role):
     name_word = name.split()
     letter = name_word[0][0] + name_word[-1][0]
     prefix = str(year) + letter + role
-    obj = cls.query.filter(cls.id.like(f"{prefix}%")).order_by(desc(cls.id)).first()
+    obj = cls.query.filter(cls.id.like(f"{prefix}%")).order_by(cls.id).first()
     
     if obj:
         last = obj.id[-1] #not always, exception for more digit number
@@ -55,20 +55,22 @@ def id_g(cls,name,role):
     return prefix+"0"
 
 
-
-
 #main
 @app.route('/')
 def library():
     return render_template("library.html")
 
+
+#STUDENT
 @app.route("/student")
 def student():
     return render_template("student.html")
 
+
+#EMPLOYEE
 @app.route("/staff",methods=["POST","GET"])
 def staff():
-    error = None
+    error = ""
     if request.method=="POST":
         user = request.form["user"]
         fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
@@ -85,6 +87,7 @@ def Staff_Operation(): #For now COMMON to STAFF
     return render_template("staffop.html")
 
 
+#ADMIN
 @app.route("/admin",methods=["GET","POST"])
 def admin():
     if request.method == "POST":
@@ -96,9 +99,7 @@ def admin():
         return redirect("/admin")
     
     return render_template("admin.html",emp = Staff.query.all())
-
-
-    
+  
 @app.route("/edel/<int:no>")
 def Employee_Del(no):
     emp_fetch = Staff.query.get(no)
@@ -117,4 +118,4 @@ def contact():
 
 if __name__== "__main__":
     with app.app_context(): db.create_all()
-    app.run(debug=True)
+    app.run(debug=True,port=2346)
