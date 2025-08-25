@@ -13,7 +13,6 @@ staff = None #user
 student = None #user
 
 
-
 #tables
 class Book(db.Model):# for book entry
     id = db.Column(db.Integer,primary_key=True)
@@ -35,24 +34,10 @@ class Staff(db.Model):# staff add
     # password = db.Column(db.String(50))   for simplicity -> halt
 
 class Student(db.Model):# student add
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.String(4),primary_key=True)
     name = db.Column(db.String(50))
-    passout = db.Column(db.Date,default=(datetime.now().year + 4))
+    passout = db.Column(db.Integer,default=(datetime.now().year + 4))
     mail = db.Column(db.String(75))
-
-#useful function
-def id_g(cls,name,role):
-    year = datetime.now().year % 100
-    name_word = name.split()
-    letter = name_word[0][0] + name_word[-1][0]
-    prefix = str(year) + letter + role
-    obj = cls.query.filter(cls.id.like(f"{prefix}%")).order_by(cls.id).first()
-    
-    if obj:
-        last = obj.id[-1] #not always, exception for more digit number
-        return f"{prefix}{int(last)+1}"
-    
-    return prefix+"0"
 
 
 #main
@@ -85,6 +70,18 @@ def staff():
 @app.route("/staffop")
 def Staff_Operation(): #For now COMMON to STAFF
     return render_template("staffop.html")
+
+@app.route("/staffaddstu",methods=["POST","GET"])
+def Staff_Add_Student():
+    if request.method=="POST":
+        name=request.form["name"]
+        mail=request.form["mail"]
+        db.session.add(Student(name=name,mail=mail))
+        db.session.commit()
+        return redirect('/')
+    
+    all_stu = Student.query.all()
+    return render_template("staffaddstu.html",stus=all_stu)
 
 
 #ADMIN

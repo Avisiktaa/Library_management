@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block t %}Add Student{% endblock t %}
+{% block b %}
+<div class="container">
+<form method="post" action="/staffaddstu">
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" name="name" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Email address</label>
+    <input type="email" name="mail" class="form-control">
+    <div class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Mail</th>
+      <th scope="col">Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stu in stus %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{stu.name}}</td>
+      <td>{{stu.mail}}</td>
+      <td>{{stu.passout}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock b %}

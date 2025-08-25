@@ -10,6 +10,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 21 Aug: Created database, Add and Del staff records 
 - 23 Aug: Ready Staff Page
 - 24 Aug: Make webpage working and better , except the Student
+- 25 Aug: Add Student,but not working->id.
 
 **Avisikta (47)**  
 - _Pending update_  
