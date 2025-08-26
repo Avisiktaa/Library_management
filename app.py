@@ -85,6 +85,23 @@ def Staff_Add_Student():
 
 
 #ADMIN
+@app.route("/login",methods=["POST","GET"])
+def Admin_Login():
+    error = ""
+    if request.method == "POST":
+        name = request.form["user"]
+        password = request.form["password"]
+        try:
+            if head[name] == password:
+                return redirect("/admin")
+            else:
+                error = "Wrong Password"
+        except:
+            error = "No such user found"
+    
+    return render_template("login.html",error=error)
+
+
 @app.route("/admin",methods=["GET","POST"])
 def admin():
     if request.method == "POST":
