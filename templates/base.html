@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <title>{% block t %} Home {% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <title>{% block t %} Home {% endblock %}</title>
 </head>
 <header>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <!-- Logo + Brand -->
-    <a class="navbar-brand d-flex align-items-center" href="https://stcet.ac.in/">
-      <img src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX10193260.jpg" alt="Logo" width="40" height="30" class="me-2">ABC
-    </a>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <!-- Logo + Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="https://stcet.ac.in/">
+        <img src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX10193260.jpg" alt="Logo" width="40" height="30"
+          class="me-2">ABC
+      </a>
 
-    <!-- Toggle button for mobile view -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Toggle button for mobile view -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Navigation links -->
-    <div class="collapse navbar-collapse" id="mainNavbar">
-      <div class="navbar-nav ms-3">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/student">Student</a>
-        <a class="nav-link" href="/staff">Staff</a>
-        <a class="nav-link" href="/login">Admin</a>
-        <a class="nav-link" href="/abtus">About Us</a>
-        <a class="nav-link" href="/cnt">Contact</a>
+      <!-- Navigation links -->
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <div class="navbar-nav ms-3">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link" href="/student">Student</a>
+          <a class="nav-link" href="/staff">Staff</a>
+          <a class="nav-link" href="/login">Admin</a>
+          <a class="nav-link" href="/abtus">About Us</a>
+          <a class="nav-link" href="/cnt">Contact</a>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 </header>
+
 <body>
-    {% block  b %}
-    
-    {% endblock b %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  {% block b %}
+
+  {% endblock b %}
 </body>
 <hr>
 <footer class="text-center py-3">

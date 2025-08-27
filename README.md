@@ -12,6 +12,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 24 Aug: Make webpage working and better , except the Student
 - 25 Aug: Add Student,but not working->id.
 - 26 Aug: Admin User-Password page
+- 27 Aug: Completed Add-Del Student with unique id (with O(n))
 
 **Avisikta (47)**  
 - _Pending update_  

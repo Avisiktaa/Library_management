@@ -19,19 +19,21 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Sl No.</th>
       <th scope="col">Name</th>
       <th scope="col">Mail</th>
       <th scope="col">Year</th>
+      <th scope="col">Operation</th>
     </tr>
   </thead>
   <tbody>
     {% for stu in stus %}
     <tr>
-      <th scope="row">{{loop.index}}</th>
+      <th scope="row">{{stu.id}}</th>
       <td>{{stu.name}}</td>
       <td>{{stu.mail}}</td>
       <td>{{stu.passout}}</td>
+      <td><a href="/staffdelstu/{{stu.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

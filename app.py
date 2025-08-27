@@ -1,6 +1,8 @@
 from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from datetime import datetime
+import util 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
@@ -9,9 +11,6 @@ db = SQLAlchemy(app)
 
 #for temporary 
 head = {"admin":"1234"} # user:password
-staff = None #user
-student = None #user
-
 
 #tables
 class Book(db.Model):# for book entry
@@ -36,8 +35,33 @@ class Staff(db.Model):# staff add
 class Student(db.Model):# student add
     id = db.Column(db.String(4),primary_key=True)
     name = db.Column(db.String(50))
-    passout = db.Column(db.Integer,default=(datetime.now().year + 4))
+    passout = db.Column(db.Integer)
     mail = db.Column(db.String(75))
+
+#useful function
+def stu_id(obj): #error found ->lexigraphy order->solved
+    name = obj.name.split()
+    yr = (obj.passout) % 100
+    ans = str(yr) + name[0][0] + name[-1][0]
+    max_id = db.session.query(func.max(Student.id)).filter(Student.id.like(f"{ans}%")).scalar()
+    if max_id:
+        last = max_id[4:] #from index 4 to end
+    else:
+        last = "00"
+    
+    data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    new_last = ""
+    r = 1
+    while r >= 0:
+        if last[r] == '9':
+            new_last = data[0] + new_last #means adding on front
+            r -= 1
+        else:
+            index = data.index(last[r])
+            new_last = data[index+1] + new_last
+            break
+
+    return ans + last[:r] + new_last
 
 
 #main
@@ -76,12 +100,22 @@ def Staff_Add_Student():
     if request.method=="POST":
         name=request.form["name"]
         mail=request.form["mail"]
-        db.session.add(Student(name=name,mail=mail))
+        passout = datetime.now().year
+        stu = Student(name=name,mail=mail,passout=passout)
+        stu.id = stu_id(stu)
+        db.session.add(stu)
         db.session.commit()
-        return redirect('/')
+        return redirect('/staffaddstu')
     
     all_stu = Student.query.all()
     return render_template("staffaddstu.html",stus=all_stu)
+
+@app.route("/staffdelstu/<id>")
+def Staff_Del_Student(id):
+    useless = Student.query.get(id)
+    db.session.delete(useless)
+    db.session.commit()
+    return redirect("/staffaddstu")
 
 
 #ADMIN
@@ -132,4 +166,4 @@ def contact():
 
 if __name__== "__main__":
     with app.app_context(): db.create_all()
-    app.run(debug=True,port=2346)
+    app.run(debug=True,host="0.0.0.0")
