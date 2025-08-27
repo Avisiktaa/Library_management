@@ -2,7 +2,6 @@ from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import datetime
-import util 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
@@ -20,12 +19,6 @@ class Book(db.Model):# for book entry
     user = db.Column(db.String(10),default=None)
     date = db.Column(db.Date,default=None)
 
-class Stock(db.Model): #student will search the book
-    id = db.Column(db.Integer,primary_key=True)
-    title = db.Column(db.String(50))
-    author = db.Column(db.String(50))
-    count = db.Column(db.Integer)
-
 class Staff(db.Model):# staff add
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
@@ -33,23 +26,27 @@ class Staff(db.Model):# staff add
     # password = db.Column(db.String(50))   for simplicity -> halt
 
 class Student(db.Model):# student add
-    id = db.Column(db.String(4),primary_key=True)
+    id = db.Column(db.String(6),primary_key=True)
     name = db.Column(db.String(50))
     passout = db.Column(db.Integer)
     mail = db.Column(db.String(75))
 
 #useful function
+data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
+   'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
+   'u', 'v', 'w', 'x', 'y', 'z']
 def stu_id(obj): #error found ->lexigraphy order->solved
     name = obj.name.split()
     yr = (obj.passout) % 100
     ans = str(yr) + name[0][0] + name[-1][0]
     max_id = db.session.query(func.max(Student.id)).filter(Student.id.like(f"{ans}%")).scalar()
+    
     if max_id:
         last = max_id[4:] #from index 4 to end
     else:
-        last = "00"
+        return ans + "00"
     
-    data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     new_last = ""
     r = 1
     while r >= 0:
@@ -62,6 +59,7 @@ def stu_id(obj): #error found ->lexigraphy order->solved
             break
 
     return ans + last[:r] + new_last
+
 
 
 #main
@@ -95,27 +93,27 @@ def staff():
 def Staff_Operation(): #For now COMMON to STAFF
     return render_template("staffop.html")
 
-@app.route("/staffaddstu",methods=["POST","GET"])
-def Staff_Add_Student():
+@app.route("/addstu",methods=["POST","GET"])
+def Add_Student():
     if request.method=="POST":
         name=request.form["name"]
         mail=request.form["mail"]
-        passout = datetime.now().year
+        passout = datetime.now().year + 4
         stu = Student(name=name,mail=mail,passout=passout)
         stu.id = stu_id(stu)
         db.session.add(stu)
         db.session.commit()
-        return redirect('/staffaddstu')
+        return redirect('/addstu')
     
     all_stu = Student.query.all()
-    return render_template("staffaddstu.html",stus=all_stu)
+    return render_template("addstu.html",stus=all_stu)
 
-@app.route("/staffdelstu/<id>")
-def Staff_Del_Student(id):
+@app.route("/delstu/<id>")
+def Del_Student(id):
     useless = Student.query.get(id)
     db.session.delete(useless)
     db.session.commit()
-    return redirect("/staffaddstu")
+    return redirect("/addstu")
 
 
 #ADMIN

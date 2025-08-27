@@ -2,7 +2,7 @@
 {% block t %}Add Student{% endblock t %}
 {% block b %}
 <div class="container">
-<form method="post" action="/staffaddstu">
+<form method="post" action="/addstu">
   <div class="mb-3">
     <label class="form-label">Name</label>
     <input type="text" name="name" class="form-control">
@@ -16,6 +16,7 @@
 </form>
 </div>
 
+<!-- For looking student list -->
 <table class="table">
   <thead>
     <tr>
@@ -33,7 +34,7 @@
       <td>{{stu.name}}</td>
       <td>{{stu.mail}}</td>
       <td>{{stu.passout}}</td>
-      <td><a href="/staffdelstu/{{stu.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
+      <td><a href="/delstu/{{stu.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

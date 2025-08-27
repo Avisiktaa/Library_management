@@ -13,6 +13,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 25 Aug: Add Student,but not working->id.
 - 26 Aug: Admin User-Password page
 - 27 Aug: Completed Add-Del Student with unique id (with O(n))
+- 27 Aug: Rename the url & .html file in short
 
 **Avisikta (47)**  
 - _Pending update_  
