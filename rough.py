@@ -24,7 +24,7 @@ def idg(id): #1679616
     i = 3
     while i >= 0:
         if new[i] == "z":
-            new[i] = "a"
+            new[i] = a[0]
             i -= 1
         else:
             idx = a.index(new[i])

@@ -36,7 +36,7 @@ data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
    'u', 'v', 'w', 'x', 'y', 'z']
-def stu_id(obj): #error found ->lexigraphy order->solved
+def stu_id(obj): #error found ->lexicography order->solved
     name = obj.name.split()
     yr = (obj.passout) % 100
     ans = str(yr) + name[0][0] + name[-1][0]
