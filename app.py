@@ -46,7 +46,6 @@ def stu_id(obj): #error found ->lexicography order->solved
         last = max_id[4:] #from index 4 to end
     else:
         return ans + "00"
-    
     new_last = ""
     r = 1
     while r >= 0:
@@ -115,7 +114,26 @@ def Del_Student(id):
     db.session.commit()
     return redirect("/addstu")
 
+@app.route("/add_book",methods=["POST","GET"])
+def Add_Book():
+    if request.method=="POST":
+        id=request.form["ID"]
+        title=request.form["Title"]
+        author=request.form["Author"]
+        book= Book(id=id,title=title,author=author)
+        db.session.add(book)
+        db.session.commit()
+        return redirect("/add_book")
+    
+    all_book= Book.query.all()
+    return render_template("add_book.html", books=all_book,stus=Student.query.all())
 
+@app.route("/delbook/<id>")
+def Del_Book(id):
+    useless = Book.query.get(id)
+    db.session.delete(useless)
+    db.session.commit()
+    return redirect("/add_book")
 #ADMIN
 @app.route("/login",methods=["POST","GET"])
 def Admin_Login():
