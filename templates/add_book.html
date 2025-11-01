@@ -3,11 +3,7 @@
 {% block b %}
 <div class="container">
     <form method="post" action="/add_book">
-        <div class="mb-3">
-            <label class="form-label">ID</label>
-            <input type="text" name="ID" class="form-control">
-        </div>
-        <div class="mb-3">
+        <div class="mb-3 my-3">
             <label class="form-label">Title</label>
             <input type="text" name="Title" class="form-control">
         </div>
@@ -25,21 +21,19 @@
             <th scope="col">ID</th>
             <th scope="col">Title</th>
             <th scope="col">Author</th>
-            <th scope="col">Borrowed/Reserved by</th>
             <th scope="col">Operation</th>
         </tr>
     </thead>
-        <tbody>
-    {% for book in books %}
-    
+    <tbody>
+        {% for book in books %}
+
         <tr>
-            <th scope="row">{{book.id}}</th>
+            <th scope="row">{{loop.index}}</th>
             <td>{{book.title}}</td>
             <td>{{book.author}}</td>
-            <td>{{book.user}}</td>
             <td><a href="/delbook/{{book.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
         </tr>
-    {% endfor %}
-  </tbody>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock b %}

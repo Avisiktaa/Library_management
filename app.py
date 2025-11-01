@@ -117,10 +117,9 @@ def Del_Student(id):
 @app.route("/add_book",methods=["POST","GET"])
 def Add_Book():
     if request.method=="POST":
-        id=request.form["ID"]
         title=request.form["Title"]
         author=request.form["Author"]
-        book= Book(id=id,title=title,author=author)
+        book= Book(title=title,author=author)
         db.session.add(book)
         db.session.commit()
         return redirect("/add_book")

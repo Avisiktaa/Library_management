@@ -15,6 +15,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 27 Aug: Completed Add-Del Student with unique id (with O(n))
 - 27 Aug: Rename the url & .html file in short
 - 28 Aug: Error Edited
+- 1 Nov: Add_Book url integrate
 
 **Avisikta (47)**  
 - _Pending update_  
