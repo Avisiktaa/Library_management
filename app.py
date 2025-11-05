@@ -126,8 +126,8 @@ def Issue():
 def Modify():
     if session:
         if request.method=="POST":
-            
-        return render_template("modify.html",user=session["U"])
+            pass
+        # return render_template("modify.html",user=session["U"])
     
     return render_template("error.html")
 
