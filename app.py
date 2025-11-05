@@ -257,17 +257,8 @@ def contact():
     return render_template("cnt.html")
     
 
-def create_default_data():
-    if Staff.query.count() == 0:
-        staff1 = Staff(name="John Doe", mail="john@library.com")
-        staff2 = Staff(name="Jane Smith", mail="jane@library.com")
-        staff3 = Staff(name="Mike Wilson", mail="mike@library.com")
-        db.session.add_all([staff1, staff2, staff3])
-        db.session.commit()
-        print("Default staff added to database")
 
 if __name__== "__main__":
     with app.app_context(): 
         db.create_all()
-        create_default_data()
     app.run(debug=True,host="0.0.0.0")

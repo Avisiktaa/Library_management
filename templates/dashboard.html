@@ -22,6 +22,7 @@
     <a class="nav-link text-danger" href="/logout">Logout</a>
   </li>
 </ul>
+<br>
 
 <table class="table">
     <thead>
@@ -38,7 +39,7 @@
         <tr>
             <th scope="row">{{loop.index}}</th>
             <td>{{each.name}}</td>
-            <td>{{each.fine}}</td>
+            <td class="text-danger">{{each.fine}}</td>
             <td><a href="/paid/{{each.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
         </tr>
         {% endfor %}
