@@ -1,28 +1,26 @@
 {% extends "base.html" %}
 {% block t %} Hello User {% endblock t %}
+{% block b %}
 <ul class="nav justify-content-center">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page">Return</a>
+    <a class="nav-link active" aria-current="page">Dashborad</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-dark" href="/addstu">Add Student</a>
-  </li>
+  
   <li class="nav-item">
     <a class="nav-link text-dark" href="/issue">Issue</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link text-dark" href="/renew">Renew</a>
+    <a class="nav-link text-dark" aria-current="page" href="/modify">Modify</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-dark" href="/add_book">Add Book</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link text-dark" href="/addstu">Add Student</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link text-danger" href="/logout">Logout</a>
   </li>
 </ul>
-{% block b %}
 <br>
-
-
-
 {% endblock b %}

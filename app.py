@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import date
+from datetime import datetime
 
 
 #BASE
@@ -19,20 +20,26 @@ class Book(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(50))
     author = db.Column(db.String(50))
-    user = db.Column(db.String(10),default=None)
-    date = db.Column(db.Date,default=None)
+    user = db.Column(db.String(10),default=None) #took
+    date = db.Column(db.Date,default=None) #when
 
 class Staff(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
     mail = db.Column(db.String(50))
-    # password = db.Column(db.String(50))   for simplicity -> halt
 
 class Student(db.Model):
     id = db.Column(db.String(6),primary_key=True)
     name = db.Column(db.String(50))
     passout = db.Column(db.Integer)
     mail = db.Column(db.String(75))
+
+class History(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(50))
+    sid = db.Column(db.Integer)
+    bid = db.Column(db.Integer)
+    date = db.Column(db.DateTime,default=datetime.now)
 
 #FUNC
 data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
@@ -84,7 +91,7 @@ def staff():
         fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
         if fetch: 
             #present 
-            session["U"]="E"
+            session["U"]=fetch.name
             session["id"]=fetch.id
             return redirect("/issue")
         else: 
@@ -99,24 +106,24 @@ def logout():
     session.pop("id",None)
     return redirect("/")
 
+@app.route("/dashboard",methods=["POST","GET"])
+def Dashboard():
+    if session:
+        return render_template("dashboard.html",user=session["U"])
+    
+    return render_template("error.html")
+
 @app.route("/issue",methods=["POST","GET"])
 def Issue():
-    if session.get("U","X")=="E":
-        return render_template("issue.html")
+    if session:
+        return render_template("issue.html",user=session["U"])
     
     return render_template("error.html")
 
-@app.route("/renew",methods=["POST","GET"])
-def Issue():
-    if session.get("U","X")=="E":
-        return render_template("issue.html")
-    
-    return render_template("error.html")
-
-@app.route("/return",methods=["POST","GET"])
-def Issue():
-    if session.get("U","X")=="E":
-        return render_template("issue.html")
+@app.route("/modify",methods=["POST","GET"])
+def Modify():
+    if session:
+        return render_template("modify.html",user=session["U"])
     
     return render_template("error.html")
 
