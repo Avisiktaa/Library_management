@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block t %} Staff Login {% endblock t %}
+{% block t %} Admin Login {% endblock t %}
 {% block b %}
 <body class="bg-light">
   <div class="container d-flex justify-content-center align-items-center vh-100">
@@ -10,7 +10,7 @@
       <div class="card-body">
         <form method="POST" action="/login">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="user" name="user" placeholder="name@example.com" required>
+            <input type="text" class="form-control" id="user" name="user" password="User" required>
             <label for="user">User</label>
           </div>
           <div class="form-floating mb-3">

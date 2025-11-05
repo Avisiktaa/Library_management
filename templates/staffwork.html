@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block t %} Admin {% endblock %}
+{% block b %}
+<br>
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/admin">Employee List</a>
+  </li>
+  <!-- <li class="nav-item">
+    <a class="nav-link text-dark" href="/addstus">Bulk Student Entry</a>
+  </li> -->
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/staffwork">Employee Work</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-danger" href="/logout">Logout</a>
+  </li>
+</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Sn no.</th>
+            <th scope="col">Staff Id</th>
+            <th scope="col">Book Id</th>
+            <th scope="col">Date-Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for each in work %}
+
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{each.sid}}</td>
+            <td>{{each.bid}}</td>
+            <td>{{each.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock b %}

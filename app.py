@@ -247,6 +247,10 @@ def Employee_Del(no):
     return redirect("/admin")
 
 
+@app.route("/staffwork")
+def Staff_Work():
+    return render_template("staffwork.html",work=History.query.all())
+
 #END
 @app.route("/abtus")
 def About_Us():
