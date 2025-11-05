@@ -14,8 +14,10 @@
 <div class="container">
   <section class="search-section">
     <h2>Search Books</h2>
-    <input type="text" id="searchBook" placeholder="Enter book title or author name...">
-    <button onclick="searchBooks()">Search</button>
+    <form method="POST" action="/search">
+      <input type="text" name="query" placeholder="Enter book title or author name..." value="{{ query or '' }}">
+      <button type="submit">Search</button>
+    </form>
 
     <table id="bookTable">
       <thead>
@@ -27,7 +29,20 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Results will appear here -->
+        {% if books %}
+          {% for book in books %}
+          <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ "No" if book.user else "Yes" }}</td>
+          </tr>
+          {% endfor %}
+        {% elif query %}
+          <tr><td colspan="4">No books found</td></tr>
+        {% else %}
+          <tr><td colspan="4">Enter search term to find books</td></tr>
+        {% endif %}
       </tbody>
     </table>
   </section>
@@ -55,7 +70,7 @@
   <a href="/books" class="btn btn-info btn-sm">📚 View All Books</a>
 </div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+
 
 
 

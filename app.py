@@ -105,21 +105,27 @@ def logout():
     session.pop("id",None)
     return redirect("/")
 
-@app.route("/dashboard")
+@app.route("/dashboard",methods=["POST","GET"])
 def Dashboard():
-    return render_template("dashboard.html")
+    if session:
+        return render_template("dashboard.html",user=session["U"])
+    
+    return render_template("error.html")
 
 @app.route("/issue",methods=["POST","GET"])
 def Issue():
     if session:
-        return render_template("issue.html")
+        return render_template("issue.html",user=session["U"])
+    
+
+
 
     return render_template("error.html")
 
 @app.route("/modify",methods=["POST","GET"])
 def Modify():
     if session:
-        return render_template("modify.html")
+        return render_template("modify.html",user=session["U"])
     
     return render_template("error.html")
 
@@ -186,6 +192,18 @@ def Del_Book(id):
 def View_Books():
     return render_template("books.html", books=Book.query.all())
 
+@app.route("/search", methods=["POST", "GET"])
+def Search_Books():
+    books = []
+    query = ""
+    if request.method == "POST":
+        query = request.form.get("query", "").strip()
+        if query:
+            books = Book.query.filter(
+                (Book.title.contains(query)) | (Book.author.contains(query))
+            ).all()
+    return render_template("library.html", books=books, query=query)
+
 
 #ADMIN
 @app.route("/login",methods=["POST","GET"])
@@ -228,12 +246,6 @@ def Employee_Del(no):
     db.session.commit()
     return redirect("/admin")
 
-@app.route("/staffwork")
-def Staff_Work():
-    if session.get("U","X")!="A":
-        return render_template("error.html")
-    return render_template("admin.html",emp = Staff.query.all())
-
 
 #END
 @app.route("/abtus")
@@ -246,7 +258,6 @@ def contact():
     
 
 def create_default_data():
-    # Add default staff if none exist
     if Staff.query.count() == 0:
         staff1 = Staff(name="John Doe", mail="john@library.com")
         staff2 = Staff(name="Jane Smith", mail="jane@library.com")
