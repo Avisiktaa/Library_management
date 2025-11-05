@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block t %}All Books{% endblock %}
+{% block b %}
+<div class="container my-4">
+    <h2 class="text-center mb-4">📚 All Books in Library</h2>
+    
+    {% if books %}
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>
+                    {% if book.user %}
+                        <span class="badge bg-danger">Issued</span>
+                    {% else %}
+                        <span class="badge bg-success">Available</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <h4>No books found in the library</h4>
+        <p>Books will appear here once they are added to the database.</p>
+    </div>
+    {% endif %}
+    
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

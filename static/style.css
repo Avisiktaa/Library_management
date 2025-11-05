@@ -82,3 +82,8 @@ tr:nth-child(even) {
 .issued-section {
   margin-top: 40px;
 }
+
+.View{
+    padding: 10px 15px;
+    margin-left: 40px;
+}

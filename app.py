@@ -182,6 +182,10 @@ def Del_Book(id):
     db.session.commit()
     return redirect("/add_book")
 
+@app.route("/books")
+def View_Books():
+    return render_template("books.html", books=Book.query.all())
+
 
 #ADMIN
 @app.route("/login",methods=["POST","GET"])
@@ -224,6 +228,12 @@ def Employee_Del(no):
     db.session.commit()
     return redirect("/admin")
 
+@app.route("/staffwork")
+def Staff_Work():
+    if session.get("U","X")!="A":
+        return render_template("error.html")
+    return render_template("admin.html",emp = Staff.query.all())
+
 
 #END
 @app.route("/abtus")
@@ -235,6 +245,18 @@ def contact():
     return render_template("cnt.html")
     
 
+def create_default_data():
+    # Add default staff if none exist
+    if Staff.query.count() == 0:
+        staff1 = Staff(name="John Doe", mail="john@library.com")
+        staff2 = Staff(name="Jane Smith", mail="jane@library.com")
+        staff3 = Staff(name="Mike Wilson", mail="mike@library.com")
+        db.session.add_all([staff1, staff2, staff3])
+        db.session.commit()
+        print("Default staff added to database")
+
 if __name__== "__main__":
-    with app.app_context(): db.create_all()
+    with app.app_context(): 
+        db.create_all()
+        create_default_data()
     app.run(debug=True,host="0.0.0.0")
