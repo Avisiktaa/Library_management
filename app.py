@@ -105,30 +105,23 @@ def logout():
     session.pop("id",None)
     return redirect("/")
 
-@app.route("/dashboard",methods=["POST","GET"])
+@app.route("/dashboard")
 def Dashboard():
-    if session:
-        return render_template("dashboard.html",user=session["U"])
-    
-    return render_template("error.html")
+    return render_template("dashboard.html")
 
 @app.route("/issue",methods=["POST","GET"])
 def Issue():
     if session:
-        return render_template("issue.html",user=session["U"])
-    
-
-
+        return render_template("issue.html")
 
     return render_template("error.html")
 
 @app.route("/modify",methods=["POST","GET"])
 def Modify():
     if session:
-        if request.method=="POST":
-            #return render_template("modify.html",user=session["U"])
+        return render_template("modify.html")
     
-        #return render_template("error.html")
+    return render_template("error.html")
 
 @app.route("/renew/<bid>",methods=["POST","GET"])
 def Renew(bid):
@@ -212,7 +205,7 @@ def Admin_Login():
 @app.route("/admin",methods=["GET","POST"])
 def Employee_Add():
     if session.get("U","X")!="A":
-    return render_template("error.html")
+        return render_template("error.html")
     
     if request.method == "POST":
         name = request.form["name"]
