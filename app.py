@@ -1,37 +1,40 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
-from datetime import datetime
+from datetime import date
 
+
+#BASE
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+app.secret_key = "AGANBMKS@27473961"
 
-#for temporary 
-head = {"admin":"1234"} # user:password
+#TEMP
+head = {"admin":"2025"} # user:password
 
-#tables
-class Book(db.Model):# for book entry
+#TABLES
+class Book(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(50))
     author = db.Column(db.String(50))
     user = db.Column(db.String(10),default=None)
     date = db.Column(db.Date,default=None)
 
-class Staff(db.Model):# staff add
+class Staff(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
     mail = db.Column(db.String(50))
     # password = db.Column(db.String(50))   for simplicity -> halt
 
-class Student(db.Model):# student add
+class Student(db.Model):
     id = db.Column(db.String(6),primary_key=True)
     name = db.Column(db.String(50))
     passout = db.Column(db.Integer)
     mail = db.Column(db.String(75))
 
-#useful function
+#FUNC
 data = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
@@ -60,8 +63,7 @@ def stu_id(obj): #error found ->lexicography order->solved
     return ans + last[:r] + new_last
 
 
-
-#main
+#HOME
 @app.route('/')
 def library():
     return render_template("library.html")
@@ -73,31 +75,57 @@ def student():
     return render_template("student.html")
 
 
-#EMPLOYEE
+#STAFF
 @app.route("/staff",methods=["POST","GET"])
 def staff():
     error = ""
     if request.method=="POST":
         user = request.form["user"]
         fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
-        if fetch: #present
-            staff = user
-            return redirect("/staffop")
-        else: #adsent
+        if fetch: 
+            #present 
+            session["U"]="E"
+            session["id"]=fetch.id
+            return redirect("/issue")
+        else: 
+            #adsent
             error = "No such user available"
 
     return render_template("staff.html",error=error)
 
-@app.route("/staffop")
-def Staff_Operation(): #For now COMMON to STAFF
-    return render_template("staffop.html")
+@app.route("/logout")
+def logout():
+    session.pop("U",None)
+    session.pop("id",None)
+    return redirect("/")
+
+@app.route("/issue",methods=["POST","GET"])
+def Issue():
+    if session.get("U","X")=="E":
+        return render_template("issue.html")
+    
+    return render_template("error.html")
+
+@app.route("/renew",methods=["POST","GET"])
+def Issue():
+    if session.get("U","X")=="E":
+        return render_template("issue.html")
+    
+    return render_template("error.html")
+
+@app.route("/return",methods=["POST","GET"])
+def Issue():
+    if session.get("U","X")=="E":
+        return render_template("issue.html")
+    
+    return render_template("error.html")
 
 @app.route("/addstu",methods=["POST","GET"])
 def Add_Student():
     if request.method=="POST":
         name=request.form["name"]
         mail=request.form["mail"]
-        passout = datetime.now().year + 4
+        passout = date.today().year + 4
         stu = Student(name=name,mail=mail,passout=passout)
         stu.id = stu_id(stu)
         db.session.add(stu)
@@ -124,8 +152,7 @@ def Add_Book():
         db.session.commit()
         return redirect("/add_book")
     
-    all_book= Book.query.all()
-    return render_template("add_book.html", books=all_book,stus=Student.query.all())
+    return render_template("add_book.html", books=Book.query.all())
 
 @app.route("/delbook/<id>")
 def Del_Book(id):
@@ -133,6 +160,8 @@ def Del_Book(id):
     db.session.delete(useless)
     db.session.commit()
     return redirect("/add_book")
+
+
 #ADMIN
 @app.route("/login",methods=["POST","GET"])
 def Admin_Login():
@@ -142,6 +171,7 @@ def Admin_Login():
         password = request.form["password"]
         try:
             if head[name] == password:
+                session["U"]="A"
                 return redirect("/admin")
             else:
                 error = "Wrong Password"
@@ -152,7 +182,10 @@ def Admin_Login():
 
 
 @app.route("/admin",methods=["GET","POST"])
-def admin():
+def Employee_Add():
+    if session.get("U","X")!="A":
+        return render_template("error.html")
+    
     if request.method == "POST":
         name = request.form["name"]
         mail = request.form["mail"]
@@ -170,6 +203,8 @@ def Employee_Del(no):
     db.session.commit()
     return redirect("/admin")
 
+
+#END
 @app.route("/abtus")
 def About_Us():
     return render_template("abtus.html")
