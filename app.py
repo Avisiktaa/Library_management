@@ -1,8 +1,7 @@
 from flask import Flask,render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
-from datetime import date
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 
 #BASE
@@ -36,9 +35,9 @@ class Student(db.Model):
 
 class History(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(50))
-    sid = db.Column(db.Integer)
-    bid = db.Column(db.Integer)
+    sid = db.Column(db.Integer) #staff
+    name = db.Column(db.String(50)) #student name
+    bid = db.Column(db.Integer) #book id
     date = db.Column(db.DateTime,default=datetime.now)
 
 #FUNC
@@ -118,14 +117,37 @@ def Issue():
     if session:
         return render_template("issue.html",user=session["U"])
     
+
+
+
     return render_template("error.html")
 
 @app.route("/modify",methods=["POST","GET"])
 def Modify():
     if session:
+        if request.method=="POST":
+            
         return render_template("modify.html",user=session["U"])
     
     return render_template("error.html")
+
+@app.route("/renew/<bid>",methods=["POST","GET"])
+def Renew(bid):
+    book = Book.query.get(bid)
+    book.date = date.today() + timedelta(14)
+    db.session.add(book)
+    db.session.commit()
+    return redirect("/modify")
+
+@app.route("/return/<bid>",methods=["POST","GET"])
+def Renew(bid):
+    book = Book.query.get(bid)
+    book.user = None
+    book.date = None
+    db.session.add(book)
+    db.session.commit()
+    return redirect("/modify")
+    
 
 @app.route("/addstu",methods=["POST","GET"])
 def Add_Student():
