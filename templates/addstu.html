@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block t %}Add Student{% endblock t %}
+{% block b %}
+<div class="container">
+<form method="post" action="/addstu">
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" name="name" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Email address</label>
+    <input type="email" name="mail" class="form-control">
+    <div class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+<!-- For looking student list -->
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Sl No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Mail</th>
+      <th scope="col">Year</th>
+      <th scope="col">Operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stu in stus %}
+    <tr>
+      <th scope="row">{{stu.id}}</th>
+      <td>{{stu.name}}</td>
+      <td>{{stu.mail}}</td>
+      <td>{{stu.passout}}</td>
+      <td><a href="/delstu/{{stu.id}}" type="button" class="btn btn-sm btn-danger">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock b %}

@@ -1,5 +1,30 @@
-<h1>Staff</h1>
-<ul>
-    {% for staff in staff_list %}
-        <li>{{ staff.name }} - {{ staff.position }}</li>
-    {% endfor %}
+{% extends "base.html" %}
+{% block t %} Staff Login {% endblock t %}
+{% block b %}
+<body class="bg-light">
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-sm border-info" style="width: 100%; max-width: 400px;">
+      <div class="card-header bg-primary text-white text-center">
+        <h5 class="mb-0">Login</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/staff">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="user" name="user" placeholder="name@example.com" required>
+            <label for="user">User</label>
+          </div>
+          <!-- <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            <label for="password">Password</label>
+          </div> -->
+          <h6 class="text-danger">{{error if error else ""}}</h6>
+          <button type="submit" class="btn btn-info w-100 text-white">Login</button>
+        </form>
+        <!-- <div class="mt-3 text-center">
+          <a href="/fpassword" class="link-primary">Forgot password</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock b %}

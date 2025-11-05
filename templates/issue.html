@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block t %} Hello User {% endblock t %}
+
+{% block b %}
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" >Dashborad</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="/issue">Issue</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/modify">Modify</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/add_book">Add Book</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="/addstu">Add Student</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-danger" href="/logout">Logout</a>
+  </li>
+</ul>
+
+<div class="container">
+  <form method="post" action="/issue">
+    <div class="mb-3 my-3">
+      <label class="form-label">Student Id</label>
+      <input type="text" name="sid" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Book No.</label>
+      <input type="number" name="bid" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<br>
+{% endblock b %}

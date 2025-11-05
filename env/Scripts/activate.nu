@@ -32,7 +32,7 @@ export-env {
       }
     }
 
-    let virtual_env = r#'C:\Users\biswa\LMS\env'#
+    let virtual_env = r#'C:\Users\biswa\Git\Library_management\env'#
     let bin = r#'Scripts'#
 
     let is_windows = ($nu.os-info.family) == 'windows'
