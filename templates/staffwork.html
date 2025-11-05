@@ -23,6 +23,7 @@
             <th scope="col">Sn no.</th>
             <th scope="col">Staff Id</th>
             <th scope="col">Book Id</th>
+            <th scope="col">Student Id</th>
             <th scope="col">Date-Time</th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
             <th scope="row">{{loop.index}}</th>
             <td>{{each.sid}}</td>
             <td>{{each.bid}}</td>
+            <td>{{each.name}}</td>
             <td>{{each.date}}</td>
         </tr>
         {% endfor %}

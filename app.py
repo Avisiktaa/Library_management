@@ -90,7 +90,7 @@ def staff():
         fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
         if fetch: 
             #present 
-            session["U"]=fetch.name
+            session["U"]="E"
             session["id"]=fetch.id
             return redirect("/issue")
         else: 
@@ -108,25 +108,42 @@ def logout():
 @app.route("/dashboard",methods=["POST","GET"])
 def Dashboard():
     if session:
-        return render_template("dashboard.html",user=session["U"])
+        return render_template("dashboard.html")
     
     return render_template("error.html")
 
 @app.route("/issue",methods=["POST","GET"])
 def Issue():
     if session:
-        return render_template("issue.html",user=session["U"])
+        if request.method=="POST":
+            sid = request.form["sid"]
+            bid = request.form["bid"]
+            student_exist = Student.query.get(sid)
+            book_exist = Book.query.get(bid)
+            if student_exist and book_exist:
+                book_exist.user=sid
+                book_exist.date=date.today()
+                db.session.add(book_exist)
+                db.session.add(History(sid=session['id'],bid=bid,name=sid))
+                db.session.commit()
+                return redirect("/issue")
+            else:
+                return render_template("issue.html",se="Student Not Found!",be="Book Not Found!")
+        
+        return render_template("issue.html")
     
-
-
-
     return render_template("error.html")
 
 @app.route("/modify",methods=["POST","GET"])
 def Modify():
     if session:
-        return render_template("modify.html",user=session["U"])
-    
+        books = Book.query.filter((Book.user)!=None).all()
+        if request.method=="POST":
+            sid = request.form["sid"]
+            books = [i for i in books if i.user == sid]
+        
+        return render_template("modify.html",books=books)
+
     return render_template("error.html")
 
 @app.route("/renew/<bid>",methods=["POST","GET"])
