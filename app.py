@@ -90,9 +90,9 @@ def staff():
         fetch = Staff.query.filter_by(name=user).first() #present or not in STAFF TABLE
         if fetch: 
             #present 
-            session["U"]=fetch.name
+            session["U"]=user
             session["id"]=fetch.id
-            return redirect("/issue")
+            return redirect("/dashboard")
         else: 
             #adsent
             error = "No such user available"
@@ -105,29 +105,21 @@ def logout():
     session.pop("id",None)
     return redirect("/")
 
-@app.route("/dashboard",methods=["POST","GET"])
+@app.route("/dashboard")
 def Dashboard():
-    if session:
-        return render_template("dashboard.html",user=session["U"])
-    
-    return render_template("error.html")
+    return render_template("dashboard.html")
 
 @app.route("/issue",methods=["POST","GET"])
 def Issue():
     if session:
-        return render_template("issue.html",user=session["U"])
-    
-
-
+        return render_template("issue.html")
 
     return render_template("error.html")
 
 @app.route("/modify",methods=["POST","GET"])
 def Modify():
     if session:
-        if request.method=="POST":
-            pass
-        # return render_template("modify.html",user=session["U"])
+        return render_template("modify.html")
     
     return render_template("error.html")
 
@@ -140,7 +132,7 @@ def Renew(bid):
     return redirect("/modify")
 
 @app.route("/return/<bid>",methods=["POST","GET"])
-def Renew(bid):
+def Return(bid):
     book = Book.query.get(bid)
     book.user = None
     book.date = None
