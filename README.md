@@ -18,7 +18,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 1 Nov: Add_Book url
 
 **Avisikta (47)**  
-- _Pending update_  
+- 5 Nov: Updated the home page. Books can be searched and issued books are shown. Admin login button present  
 
 **Ankit (27)**  
 - _Pending update_  
