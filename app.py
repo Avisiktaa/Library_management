@@ -38,6 +38,7 @@ class History(db.Model):
     sid = db.Column(db.Integer) #staff
     name = db.Column(db.String(50)) #student name
     bid = db.Column(db.Integer) #book id
+    done = db.Column(db.String(2)) #Issue:Is Renew:Rn Return:Rt
     date = db.Column(db.DateTime,default=datetime.now)
 
 #FUNC
@@ -78,7 +79,16 @@ def library():
 #STUDENT
 @app.route("/student")
 def student():
-    return render_template("student.html")
+    error = ""
+    if request.method=="POST":
+        stuname = request.form["sid"]
+        details = History.query.filter_by(name=stuname).all()
+        if details:
+            return render_template("studetails.html",details=details)
+        else:
+            error = "No such student Found"
+        
+    return render_template("student.html",error=error)
 
 
 #STAFF
@@ -124,7 +134,7 @@ def Issue():
                 book_exist.user=sid
                 book_exist.date=date.today()
                 db.session.add(book_exist)
-                db.session.add(History(sid=session['id'],bid=bid,name=sid))
+                db.session.add(History(sid=session['id'],bid=bid,name=sid,done="Is"))
                 db.session.commit()
                 return redirect("/issue")
             else:
@@ -149,6 +159,7 @@ def Modify():
 @app.route("/renew/<bid>",methods=["POST","GET"])
 def Renew(bid):
     book = Book.query.get(bid)
+    db.session.add(History(sid=session['id'],bid=bid,name=book.user,done="Rn"))
     book.date = date.today() + timedelta(14)
     db.session.add(book)
     db.session.commit()
@@ -157,6 +168,7 @@ def Renew(bid):
 @app.route("/return/<bid>",methods=["POST","GET"])
 def Return(bid):
     book = Book.query.get(bid)
+    db.session.add(History(sid=session['id'],bid=bid,name=book.user,done="Rt"))
     book.user = None
     book.date = None
     db.session.add(book)
