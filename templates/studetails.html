@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block t %} BookList {% endblock t %}
+{% block b %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Sn no.</th>
+            <th scope="col">Book id</th>
+            <th scope="col">When took?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for each in details %}
+
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{each.bid}}</td>
+            <td>{{each.date}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+{% endblock b %}

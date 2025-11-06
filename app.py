@@ -77,7 +77,7 @@ def library():
 
 
 #STUDENT
-@app.route("/student")
+@app.route("/student",methods=["POST","GET"])
 def student():
     error = ""
     if request.method=="POST":
@@ -115,7 +115,7 @@ def logout():
     session.pop("id",None)
     return redirect("/")
 
-@app.route("/dashboard",methods=["POST","GET"])
+@app.route("/dashboard")
 def Dashboard():
     if session:
         return render_template("dashboard.html")
@@ -160,7 +160,7 @@ def Modify():
 def Renew(bid):
     book = Book.query.get(bid)
     db.session.add(History(sid=session['id'],bid=bid,name=book.user,done="Rn"))
-    book.date = date.today() + timedelta(14)
+    book.date = date.today()
     db.session.add(book)
     db.session.commit()
     return redirect("/modify")
