@@ -118,7 +118,9 @@ def logout():
 @app.route("/dashboard")
 def Dashboard():
     if session:
-        return render_template("dashboard.html")
+        took = Book.query.filter((Book.user)!=None).all()
+        duelist = [i for i in took if (date.today()-i.date) > timedelta(days=14)]
+        return render_template("dashboard.html",duelist=duelist)
     
     return render_template("error.html")
 
