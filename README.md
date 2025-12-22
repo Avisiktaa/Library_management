@@ -16,6 +16,7 @@ Each entry includes the contributor's name, and tasks performed.
 - 27 Aug: Rename the url & .html file in short
 - 28 Aug: Error Edited
 - 1 Nov: Add_Book url
+- 22 Dec: Fine Payment
 
 **Avisikta (47)**  
 - 5 Nov: Updated the home page. Books can be searched and issued books are shown. Admin login button present  

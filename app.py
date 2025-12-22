@@ -119,8 +119,8 @@ def logout():
 def Dashboard():
     if session:
         took = Book.query.filter((Book.user)!=None).all()
-        duelist = [i for i in took if (date.today()-i.date) > timedelta(days=14)]
-        return render_template("dashboard.html",duelist=duelist)
+        duelist = [i for i in took if i.date < date.today()]
+        return render_template("dashboard.html",duelist=duelist,date=date.today())
     
     return render_template("error.html")
 
@@ -134,7 +134,7 @@ def Issue():
             book_exist = Book.query.get(bid)
             if student_exist and book_exist:
                 book_exist.user=sid
-                book_exist.date=date.today()
+                book_exist.date=date.today() + timedelta(days=14)
                 db.session.add(book_exist)
                 db.session.add(History(sid=session['id'],bid=bid,name=sid,done="Is"))
                 db.session.commit()
