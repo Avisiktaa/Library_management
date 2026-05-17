@@ -24,7 +24,10 @@
 </ul>
 
 <div class="container">
-<form method="post" action="/addstu">
+  <button type="button" class="btn btn-success" id="singleBtn">Single Entry</button>
+  <button type="button" class="btn btn-warning" id="bulkBtn">Bulk Entry</button>
+  <!-- Single Entry -->
+<form method="post" action="/addstu" id="singleForm" >
   <div class="mb-3">
     <label class="form-label">Name</label>
     <input type="text" name="name" class="form-control">
@@ -35,6 +38,14 @@
     <div class="form-text">We'll never share your email with anyone else.</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<!-- Bulk Entry -->
+ <form action="/addstudents" method="post" id="bulkForm" class="d-none">
+   <div class="m-3">
+     <input type="file" name="csvfile" accept=".csv" required>
+    </div>
+  <button type="submit">Entry</button>
 </form>
 </div>
 
@@ -61,5 +72,24 @@
     {% endfor %}
   </tbody>
 </table>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const singleForm = document.getElementById("singleForm");
+    const bulkForm = document.getElementById("bulkForm");
+    const singleBtn = document.getElementById("singleBtn");
+    const bulkBtn = document.getElementById("bulkBtn");
+
+    singleBtn.addEventListener("click", function() {
+        singleForm.classList.remove("d-none");
+        bulkForm.classList.add("d-none");
+    });
+
+    bulkBtn.addEventListener("click", function() {
+        bulkForm.classList.remove("d-none");
+        singleForm.classList.add("d-none");
+    });
+});
+</script>
 
 {% endblock b %}
