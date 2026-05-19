@@ -1,5 +1,20 @@
 # Library Management
 
+**In Command Line (cmd/powershell/linux)**
+```
+git clone 
+pip install virtualenv
+virtualenv env
+*note(1)*
+pip install -r requirements.txt
+```
+note 1
+- For Windows CMD:	env\Scripts\activate
+- For Windows PowerShell:	.\env\Scripts\Activate.ps1
+- For Linux/macOS: source env/bin/activate<br>
+
+*If any problem arises, just turn on the Developer Mode through Windows/Mac settings*
+
 **Work Summary:**  
 Each entry includes the contributor's name, and tasks performed.
 
