@@ -194,6 +194,20 @@ def Add_Student():
     all_stu = Student.query.all()
     return render_template("addstu.html",stus=all_stu)
 
+
+@app.route("/addstus",methods=["POST"])
+def Add_Students():
+    fr = request.files["csvfile"]
+    for line in fr:
+        part = line.decode().strip().split(',')
+        passout = date.today().year + 4
+        stu = Student(name=part[0],mail=part[1],passout=passout)
+        stu.id = stu_id(stu)
+        db.session.add(stu)
+    
+    db.session.commit()
+    return redirect('/addstu')
+
 @app.route("/delstu/<id>")
 def Del_Student(id):
     useless = Student.query.get(id)

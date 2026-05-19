@@ -41,11 +41,12 @@
 </form>
 
 <!-- Bulk Entry -->
- <form action="/addstudents" method="post" id="bulkForm" class="d-none">
+ <form action="/addstus" method="post" id="bulkForm" class="d-none" enctype="multipart/form-data">
    <div class="m-3">
      <input type="file" name="csvfile" accept=".csv" required>
     </div>
   <button type="submit">Entry</button>
+  <a href="/static/data.csv" download>File Format</a>
 </form>
 </div>
 
